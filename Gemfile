@@ -48,5 +48,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "kaminari"
+  gem "json", "~> 2.9"
 
 end
