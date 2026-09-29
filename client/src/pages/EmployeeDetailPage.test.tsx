@@ -99,8 +99,10 @@ describe("EmployeeDetailPage", () => {
     await screen.findByText(/Alice Wong/);
 
     await userEvent.type(screen.getByLabelText(/New amount/i), "100000");
+    await userEvent.type(screen.getByLabelText(/Effective start date/i), "2025-01-01");
     await userEvent.click(screen.getByRole("button", { name: /Save Salary Change/i }));
 
     expect(await screen.findByText(/effective_start_date must be after/i)).toBeInTheDocument();
   });
+
 });
