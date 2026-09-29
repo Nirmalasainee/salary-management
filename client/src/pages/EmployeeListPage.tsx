@@ -7,7 +7,16 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const columns: GridColDef[] = [
-  { field: "employee_number", headerName: "Employee #", width: 120 },
+  {
+    field: "employee_number",
+    headerName: "Employee #",
+    width: 120,
+    renderCell: (params) => (
+      <Typography component="span" sx={{ color: "primary.main", textDecoration: "underline" }}>
+        {params.value}
+      </Typography>
+    ),
+  },
   { field: "first_name", headerName: "First Name", flex: 1, minWidth: 120 },
   { field: "last_name", headerName: "Last Name", flex: 1, minWidth: 120 },
   { field: "email", headerName: "Email", flex: 1.5, minWidth: 200 },
@@ -16,7 +25,6 @@ const columns: GridColDef[] = [
   { field: "job_level", headerName: "Level", flex: 1, minWidth: 110 },
   { field: "status", headerName: "Status", width: 100 },
 ];
-
 
 export default function EmployeeListPage() {
   const navigate = useNavigate();
@@ -109,6 +117,10 @@ export default function EmployeeListPage() {
           onRowClick={(params) => navigate(`/employees/${params.id}`)}
           disableColumnFilter
           disableRowSelectionOnClick
+          sx={{
+            "& .MuiDataGrid-row": { cursor: "pointer" },
+            "& .MuiDataGrid-row:hover": { backgroundColor: "action.hover" },
+          }}
         />
       </Box>
     </Box>
