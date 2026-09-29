@@ -65,18 +65,22 @@ export default function AddEmployeePage() {
   return (
     <Box>
       <Typography variant="h5" gutterBottom>Add Employee</Typography>
-      <Paper sx={{ p: 3, maxWidth: 480 }}>
+      <Paper sx={{ p: 3, maxWidth: 680, mx: "auto" }}>
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-        <Stack component="form" spacing={2} onSubmit={handleSubmit}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2 }}
+        >
           <TextField label="Employee number" required value={employeeNumber} onChange={(e) => setEmployeeNumber(e.target.value)} />
           <TextField label="First name" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+
           <TextField label="Last name" required value={lastName} onChange={(e) => setLastName(e.target.value)} />
           <TextField label="Email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
 
           <TextField select label="Country" required value={countryId} onChange={(e) => handleCountryChange(e.target.value)}>
             {referenceData?.countries.map((c) => <MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>)}
           </TextField>
-
           <TextField select label="Department" required value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
             {referenceData?.departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
           </TextField>
@@ -84,7 +88,6 @@ export default function AddEmployeePage() {
           <TextField select label="Level" required value={jobLevelId} onChange={(e) => setJobLevelId(e.target.value)}>
             {referenceData?.job_levels.map((l) => <MenuItem key={l.id} value={l.id}>{l.name}</MenuItem>)}
           </TextField>
-
           <TextField
             label="Hire date" type="date" required
             value={hireDate}
@@ -97,7 +100,6 @@ export default function AddEmployeePage() {
             value={amount}
             onChange={(e) => setAmount(e.target.value === "" ? "" : Number(e.target.value))}
           />
-
           <TextField
             label="Currency code" required
             value={currencyCode}
@@ -105,10 +107,15 @@ export default function AddEmployeePage() {
             slotProps={{ htmlInput: { maxLength: 3 } }}
           />
 
-          <Button type="submit" variant="contained" disabled={submitting}>
-            {submitting ? "Creating..." : "Create Employee"}
-          </Button>
-        </Stack>
+          <Stack direction="row" spacing={2} sx={{ gridColumn: "1 / -1" }}>
+            <Button type="submit" variant="contained" disabled={submitting}>
+              {submitting ? "Creating..." : "Create Employee"}
+            </Button>
+            <Button variant="outlined" onClick={() => navigate("/employees")} disabled={submitting}>
+              Cancel
+            </Button>
+          </Stack>
+        </Box>
       </Paper>
     </Box>
   );

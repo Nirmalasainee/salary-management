@@ -8,14 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 
 const columns: GridColDef[] = [
   { field: "employee_number", headerName: "Employee #", width: 120 },
-  { field: "first_name", headerName: "First Name", width: 140 },
-  { field: "last_name", headerName: "Last Name", width: 140 },
-  { field: "email", headerName: "Email", width: 220 },
-  { field: "department", headerName: "Department", width: 160 },
-  { field: "country", headerName: "Country", width: 140 },
-  { field: "job_level", headerName: "Level", width: 120 },
+  { field: "first_name", headerName: "First Name", flex: 1, minWidth: 120 },
+  { field: "last_name", headerName: "Last Name", flex: 1, minWidth: 120 },
+  { field: "email", headerName: "Email", flex: 1.5, minWidth: 200 },
+  { field: "department", headerName: "Department", flex: 1, minWidth: 140 },
+  { field: "country", headerName: "Country", flex: 1, minWidth: 130 },
+  { field: "job_level", headerName: "Level", flex: 1, minWidth: 110 },
   { field: "status", headerName: "Status", width: 100 },
 ];
+
 
 export default function EmployeeListPage() {
   const navigate = useNavigate();
@@ -54,11 +55,12 @@ export default function EmployeeListPage() {
 
   return (
     <Box>
-      <Typography variant="h5" gutterBottom>Employees</Typography>
-      <Button component={Link} to="/employees/new" variant="contained" sx={{ mb: 2 }}>
-        + Add Employee
-      </Button>
-
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+        <Typography variant="h5">Employees</Typography>
+        <Button component={Link} to="/employees/new" variant="contained">
+          + Add Employee
+        </Button>
+      </Box>
 
       <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
         <TextField

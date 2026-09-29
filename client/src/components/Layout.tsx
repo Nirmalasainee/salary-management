@@ -11,7 +11,7 @@ export default function Layout() {
           <Button component={Link} to="/dashboard">Dashboard</Button>
         </Toolbar>
       </AppBar>
-      <Container sx={{ mt: 3 }}>
+      <Container maxWidth={false} sx={{ mt: 3, px: 3 }}>
         <Outlet />
       </Container>
     </>
