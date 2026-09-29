@@ -109,3 +109,30 @@ export async function createSalaryRecord(
 
   return res.json();
 }
+
+export type ReportGroup = {
+  id: number;
+  label: string;
+  headcount: number;
+  total_payroll_usd: number;
+  average_salary_usd: number;
+  median_salary_usd: number;
+};
+
+export async function fetchReportByDepartment(): Promise<ReportGroup[]> {
+  const res = await fetch(`${API_BASE_URL}/reports/by_department`);
+  if (!res.ok) throw new Error(`Failed to fetch department report: ${res.status}`);
+  return res.json();
+}
+
+export async function fetchReportByCountry(): Promise<ReportGroup[]> {
+  const res = await fetch(`${API_BASE_URL}/reports/by_country`);
+  if (!res.ok) throw new Error(`Failed to fetch country report: ${res.status}`);
+  return res.json();
+}
+
+export async function fetchReportByJobLevel(): Promise<ReportGroup[]> {
+  const res = await fetch(`${API_BASE_URL}/reports/by_job_level`);
+  if (!res.ok) throw new Error(`Failed to fetch job level report: ${res.status}`);
+  return res.json();
+}
