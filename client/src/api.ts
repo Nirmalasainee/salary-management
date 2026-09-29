@@ -32,11 +32,13 @@ export type PaginatedEmployees = {
 };
 
 export type ReferenceOption = { id: number; name: string };
+export type CountryOption = ReferenceOption & { currency_code: string };
 export type ReferenceData = {
-  countries: ReferenceOption[];
+  countries: CountryOption[];
   departments: ReferenceOption[];
   job_levels: ReferenceOption[];
 };
+
 
 export type EmployeeFilters = {
   page?: number;
@@ -45,6 +47,18 @@ export type EmployeeFilters = {
   country_id?: number;
   department_id?: number;
   job_level_id?: number;
+};
+
+export type NewEmployeePayload = {
+  employee_number: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  country_id: number;
+  department_id: number;
+  job_level_id: number;
+  hire_date: string;
+  status: string;
 };
 
 export async function fetchEmployees(filters: EmployeeFilters): Promise<PaginatedEmployees> {
@@ -134,5 +148,20 @@ export async function fetchReportByCountry(): Promise<ReportGroup[]> {
 export async function fetchReportByJobLevel(): Promise<ReportGroup[]> {
   const res = await fetch(`${API_BASE_URL}/reports/by_job_level`);
   if (!res.ok) throw new Error(`Failed to fetch job level report: ${res.status}`);
+  return res.json();
+}
+
+export async function createEmployee(payload: NewEmployeePayload): Promise<Employee> {
+  const res = await fetch(`${API_BASE_URL}/employees`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ employee: payload }),
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.errors?.join(", ") || `Failed to create employee: ${res.status}`);
+  }
+
   return res.json();
 }

@@ -3,7 +3,7 @@ import Layout from "./components/Layout";
 import EmployeeListPage from "./pages/EmployeeListPage";
 import DashboardPage from "./pages/DashboardPage";
 import EmployeeDetailPage from "./pages/EmployeeDetailPage";
-
+import AddEmployeePage from "./pages/AddEmployeePage";
 
 function App() {
   return (
@@ -13,6 +13,8 @@ function App() {
         <Route path="/employees" element={<EmployeeListPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/employees/:id" element={<EmployeeDetailPage />} />
+        <Route path="/employees/new" element={<AddEmployeePage />} />
+
       </Route>
     </Routes>
   );
