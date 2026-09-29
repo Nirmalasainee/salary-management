@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Box, TextField, MenuItem, Stack, Typography } from "@mui/material";
+import { Box, TextField, MenuItem, Stack, Typography, Button } from "@mui/material";
 import { DataGrid, type GridColDef, type GridPaginationModel } from "@mui/x-data-grid";
 import { fetchEmployees, fetchReferenceData, type Employee, type ReferenceData } from "../api";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 const columns: GridColDef[] = [
   { field: "employee_number", headerName: "Employee #", width: 120 },
@@ -53,8 +55,12 @@ export default function EmployeeListPage() {
   return (
     <Box>
       <Typography variant="h5" gutterBottom>Employees</Typography>
+      <Button component={Link} to="/employees/new" variant="contained" sx={{ mb: 2 }}>
+        + Add Employee
+      </Button>
 
-      <Stack direction="row" spacing={2} mb={2}>
+
+      <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
         <TextField
           label="Search name, email, employee #"
           size="small"
