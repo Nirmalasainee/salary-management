@@ -24,7 +24,7 @@ function ReportChart({ title, data }: { title: string; data: ReportGroup[] }) {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="label" angle={-30} textAnchor="end" interval={0} height={60} />
           <YAxis />
-          <Tooltip formatter={(value: number) => [value.toLocaleString(), "Avg USD"]} />
+          <Tooltip formatter={(value) => [Number(value).toLocaleString(), "Avg USD"]} />
           <Bar dataKey="average_salary_usd" fill="#1976d2" />
         </BarChart>
       </ResponsiveContainer>
