@@ -63,3 +63,49 @@ export async function fetchReferenceData(): Promise<ReferenceData> {
   if (!res.ok) throw new Error(`Failed to fetch reference data: ${res.status}`);
   return res.json();
 }
+
+export type SalaryRecord = {
+  id: number;
+  amount: string;
+  currency_code: string;
+  effective_start_date: string;
+  effective_end_date: string | null;
+  change_reason: string;
+};
+
+export type EmployeeDetail = Employee & {
+  manager_id: number | null;
+  current_salary: SalaryRecord | null;
+  salary_history: SalaryRecord[];
+};
+
+export async function fetchEmployee(id: number | string): Promise<EmployeeDetail> {
+  const res = await fetch(`${API_BASE_URL}/employees/${id}`);
+  if (!res.ok) throw new Error(`Failed to fetch employee: ${res.status}`);
+  return res.json();
+}
+
+export type SalaryChangePayload = {
+  amount: number;
+  currency_code: string;
+  effective_start_date: string;
+  change_reason: string;
+};
+
+export async function createSalaryRecord(
+  employeeId: number | string,
+  payload: SalaryChangePayload
+): Promise<SalaryRecord> {
+  const res = await fetch(`${API_BASE_URL}/employees/${employeeId}/salary_records`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ salary_record: payload }),
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.errors?.join(", ") || `Failed to record salary change: ${res.status}`);
+  }
+
+  return res.json();
+}
