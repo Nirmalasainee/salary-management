@@ -3,7 +3,7 @@ module Api
     class ReferenceDataController < ApplicationController
       def index
         render json: {
-          countries: Country.order(:name).select(:id, :name),
+          countries: Country.order(:name).select(:id, :name, :currency_code),
           departments: Department.order(:name).select(:id, :name),
           job_levels: JobLevel.order(:rank).select(:id, :name)
         }
